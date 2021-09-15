@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Todo;
+// use App\Todos;
+use App\Models\Todos;
 use Illuminate\Http\Request;
 
 class TodoController extends Controller
@@ -11,9 +12,9 @@ class TodoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        $todos = Todo::all();
+        $todos=Todos::all();
         return view('todo.index',compact('todos'));
 
     }
@@ -25,7 +26,7 @@ class TodoController extends Controller
      */
     public function create()
     {
-        //
+        return view('todo.create');
     }
 
     /**
@@ -36,7 +37,14 @@ class TodoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $todos = new Todos();
+        $todos->title = $request->input('title');
+        $todos->save();
+
+        return redirect('todos')->with(
+            'status',
+            $todos->title . 'を登録しました'
+        );
     }
 
     /**
@@ -47,7 +55,9 @@ class TodoController extends Controller
      */
     public function show($id)
     {
-        //
+        $todos = Todos::find($id);
+
+        return view('todo.show', compact('todos'));
     }
 
     /**
@@ -58,7 +68,9 @@ class TodoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $todos = Todos::find($id);
+
+        return view('todo.edit', compact('todos'));
     }
 
     /**

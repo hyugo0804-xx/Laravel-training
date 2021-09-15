@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\TodoController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -12,15 +12,19 @@ use App\Http\Controllers\TodoController;
 | contains the "web" middleware group. Now create something great!
 |
 */
+    Route::get('/', function () {
+        return view('welcome');
+    });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+    use App\Http\Controllers\TodoController;
+    // Route::resouce('/todos','TodoController');
+    Route::get('/todos', 'app/Http/Controllers/TodoController@index');
 
-Route::get('todos', 'TodoController@index');
-Route::get('todos/create', 'TodoController@create');
-Route::post('todos', 'TodoController@store');
-Route::get('todos/{id}', 'TodoController@show');
-Route::get('todos/{id}/edit', 'TodoController@edit');
-Route::put('todos/{id}', 'TodoController@update');
-Route::delete('todos/{id}', 'TodoController@destroy');
+    Route::get('todos', 'TodoController@index');
+    Route::get('todos/create', 'TodoController@create');
+    Route::post('todos', 'TodoController@store');
+    Route::get('todos/{id}', 'TodoController@show');
+    Route::get('todos/{id}/edit', 'TodoController@edit');
+    Route::put('todos/{id}', 'TodoController@update');
+    Route::delete('todos/{id}', 'TodoController@destroy');
+    
