@@ -82,7 +82,15 @@ class TodoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $todos = Todos::find($id);
+
+        $todos->title = $request->input('title');
+        $todos->save();
+
+        return redirect('todos')->with(
+            'status',
+            $todos->title . '更新しました'
+        );
     }
 
     /**
@@ -93,6 +101,12 @@ class TodoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $todos = Todos::find($id);
+        $todos->delete();
+
+        return redirect('todos')->with(
+            'status',
+            $todos->title . 'を削除しました'
+        );
     }
 }
